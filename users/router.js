@@ -1,11 +1,13 @@
 const express = require ('express')
 
-const db = require ('../data/db-config.js')
+const database = {
+  'users' : require ('../users/database')
+}
 
 const router = express.Router ()
 
 router.get ('/', (req, res) => {
-  db ('users')
+  database['users'].getAll ()
   .then (users => {
     res.json (users)
   })
@@ -17,7 +19,7 @@ router.get ('/', (req, res) => {
 router.get ('/:id', (req, res) => {
   const { id } = req.params
 
-  db ('users').where ({ id })
+  database['users'].get (id)
   .then (users => {
     const user = users[0]
 
@@ -35,7 +37,7 @@ router.get ('/:id', (req, res) => {
 router.post ('/', (req, res) => {
   const userData = req.body
 
-  db ('users').insert (userData)
+  database['users'].push (userData)
   .then (ids => {
     res.status (201).json ({ created: ids[0] })
   })
@@ -48,7 +50,7 @@ router.put ('/:id', (req, res) => {
   const { id } = req.params
   const changes = req.body
 
-  db ('users').where ({ id }).update (changes)
+  database['users'].set (id, changes)
   .then (count => {
     if (count) {
       res.json ({ update: count })
@@ -64,7 +66,7 @@ router.put ('/:id', (req, res) => {
 router.delete ('/:id', (req, res) => {
   const { id } = req.params
 
-  db ('users').where ({ id }).del ()
+  database['users'].pull (id)
   .then (count => {
     if (count) {
       res.json ({ removed: count })
