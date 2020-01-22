@@ -1,7 +1,14 @@
 const db = require ('./db')
+const get = require ('./get')
 
 module.exports =
-  (value) => (
-    db ('users')
-    .insert (value)
-  )
+  async (value) => {
+    const [ id ] = await (
+      db ('users')
+      .insert (value)
+    )
+
+    const record = await get (id)
+
+    return record
+  }

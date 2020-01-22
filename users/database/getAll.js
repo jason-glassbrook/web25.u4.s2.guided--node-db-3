@@ -1,6 +1,10 @@
 const db = require ('./db')
 
 module.exports =
-  () => (
-    db ('users')
-  )
+  async () => {
+    const records = await (
+      db ('users')
+    )
+
+    return records
+  }

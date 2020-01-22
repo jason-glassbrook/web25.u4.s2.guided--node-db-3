@@ -20,9 +20,7 @@ router.get ('/:id', (req, res) => {
   const { id } = req.params
 
   database['users'].get (id)
-  .then (users => {
-    const user = users[0]
-
+  .then (user => {
     if (user) {
       res.json (user)
     } else {
@@ -38,8 +36,8 @@ router.post ('/', (req, res) => {
   const userData = req.body
 
   database['users'].push (userData)
-  .then (ids => {
-    res.status (201).json ({ created: ids[0] })
+  .then (user => {
+    res.status (201).json (user)
   })
   .catch (err => {
     res.status (500).json ({ message: 'Failed to create new user' })
@@ -51,9 +49,9 @@ router.put ('/:id', (req, res) => {
   const changes = req.body
 
   database['users'].set (id, changes)
-  .then (count => {
-    if (count) {
-      res.json ({ update: count })
+  .then (user => {
+    if (user) {
+      res.json (user)
     } else {
       res.status (404).json ({ message: 'Could not find user with given id' })
     }
@@ -67,9 +65,9 @@ router.delete ('/:id', (req, res) => {
   const { id } = req.params
 
   database['users'].pull (id)
-  .then (count => {
-    if (count) {
-      res.json ({ removed: count })
+  .then (user => {
+    if (user) {
+      res.json (user)
     } else {
       res.status (404).json ({ message: 'Could not find user with given id' })
     }
