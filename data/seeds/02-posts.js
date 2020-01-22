@@ -1,5 +1,5 @@
-exports.seed = function(knex, Promise) {
-  return knex('posts').insert([
+exports.seed = function (knex, Promise) {
+  return knex ('posts').insert ([
     {
       contents:
         'Let your workings remain a mystery. Just show people the results.',
@@ -45,5 +45,5 @@ exports.seed = function(knex, Promise) {
         'At whatever point you leave life if you leave it in the right way, it is a whole.',
       user_id: 3,
     },
-  ]);
-};
+  ])
+}
